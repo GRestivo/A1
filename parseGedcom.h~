@@ -1,0 +1,9 @@
+#ifndef PARSE_GEDCOM_H
+#define PARSE_GEDCOM_H
+
+
+int parser (FILE *fPtr);
+
+
+#endif
+

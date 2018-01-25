@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#include "parseGedcom.h"
+
+int parser (FILE *fPtr) { /*must pass data structure*/
+  char tempLine[1000], tempLvl[10];
+  char *token, *wholeFile;
+  const char s[2] = " ";
+  int i = 0, level = 0, size = 1001;
+
+
+  /*all parse functions should follow
+    -GEDCOMerror parseXXX (char* stringToParse, some return values that says if parse was successful, if not the error that occurred) ;
+    */
+
+  /*strcat lines into one string*/
+  /*allocate exponentially, doubling each time*/
+
+  wholeFile = malloc(sizeof(char) * size);
+
+  while (fgets(tempLine, 999, fPtr) != NULL) {
+    /*i = 0;
+    while (tempLine[i] != ' ') {
+      tempLvl[i] = tempLine[i];
+      i++;
+    }*/
+
+    if ((strlen(wholeFile) + strlen(tempLine)) >= size) {
+      size = size*2;
+      wholeFile = (char*)realloc(wholeFile, size);
+      strcat(wholeFile, tempLine);
+    } else {
+      strcat(wholeFile, tempLine);
+    }
+
+    /*maybe make sure there cant be a most sig 0, like '02'*/
+    /*level = atoi(tempLvl);
+    for (i = 0; i < level; i++) {
+      printf("  ");
+    }
+    printf("%s", tempLine);
+    token = strtok (tempLine, s);
+    while (token != NULL) {
+      printf("%s\n",token);
+      token = strtok(NULL, s);
+    }
+    strcpy(tempLvl, "");*/
+  }
+
+  printf("%s", wholeFile);
+
+  free(wholeFile);
+
+return 1;
+}

@@ -1,0 +1,79 @@
+#include <stdlib.h>
+#include <string.h>
+
+#include "creatorFunctions.h"
+#include "GEDCOMparser.h"
+
+GEDCOMobject *createGEDCOMobj (Header *header, List *families, List *individuals, Submitter *submitter) {
+  /*double pointer???*/
+  GEDCOMobject *go = malloc(sizeof(GEDCOMobject));
+  go->header = header;
+  go->families = *families;
+  go->individuals = *individuals;
+  go->submitter = submitter;
+  return go;
+}
+
+GEDCOMerror *createGEDerror (ErrorCode type, int line) {
+  GEDCOMerror *ge = malloc(sizeof(GEDCOMerror));
+  ge->type = type;
+  ge->line = line;
+  return ge;
+}
+
+Event *createEvent (char type, char *date, char *place, List *otherFields) { /*others will always be of type Field*/
+  Event *e = malloc(sizeof(Event));
+  strcpy(e->type, type);
+  e->date = date;
+  e->place = place;
+  e->otherFields = *otherFields;
+  return e;
+}
+
+Field *createField (char *tag, char *value) { /*neither can be NULL nor Empty*/
+  Field *f = malloc(sizeof(Field));
+  f->tag = tag;
+  f->value = value;
+  return f;
+}
+
+Submitter *createSubmitter (char submitter, List *otherFields, char address[]) { /*address is a flexible array, check slides*/
+  int length = strlen(address);
+  Submitter *s = malloc(sizeof(Submitter) + length * sizeof(char));
+  strcpy(s->submitterName, submitter);
+  s->otherFields = *otherFields;
+  strcpy(s->address, address);
+  return s;
+}
+
+Header *createHeader (char source, float gedcVersion, CharSet encoding, Submitter *submitter, List *otherFields) {
+  Header *h = malloc(sizeof(Header));
+  strcpy(h->source, source);  /*maybe check to make sure its not longer than 250*/
+  h->gedcVersion = gedcVersion;
+  h->encoding = encoding;
+  h->submitter = submitter;
+  h->otherFields = *otherFields;
+  return h;
+}
+
+Individual *createIndividual (char *givenName, char *surname, List *events, List *families, List *otherFields) {
+  Individual *i = malloc(sizeof(Individual));
+  i->givenName = givenName;
+  i->surname = surname;
+  i->events = *events;
+  i->families = *families;
+  i->otherFields = *otherFields;
+  return i;
+}
+
+Family *createFamily (Individual *wife, Individual *husband, List *children, List *otherFields) {
+  Family *fa = malloc(sizeof(Family));
+  fa->wife = wife;
+  fa->husband = husband;
+  fa->children = *children;
+  fa->otherFields = *otherFields;
+  return fa;
+}
+
+
+

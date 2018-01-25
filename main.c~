@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include "GEDCOMutilities.h"
+#include "GEDCOMparser.h"
+
+
+int main (int argc, char **argv) {
+  /*DOES IT START BY CALLING CREATEGEDCOMOBJECT FUNCTION!!!???*/
+
+  printf("|||%s|||\n", argv[1]);
+  parser(argc, argv);
+  printf("done\n");
+
+return 0;
+}

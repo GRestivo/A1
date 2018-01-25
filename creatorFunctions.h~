@@ -1,0 +1,22 @@
+#ifndef CREATORFUNCTIONS_H
+#define CREATORFUNCTIONS_H
+
+#include "GEDCOMparser.h"
+
+GEDCOMobject *createGEDCOMobj (Header *header, List *families, List *individuals, Submitter *submitter);
+
+GEDCOMerror *createGEDerror (ErrorCode type, int line);
+
+Event *createEvent (char type, char *date, char *place, List *otherFields);/*others will always be of type Field*/
+
+Field *createField (char *tag, char *value);/*neither can be NULL nor Empty*/
+
+Submitter *createSubmitter (char submitter, List *otherFields, char address[]);/*address is a flexible array, check slides*/
+
+Header *createHeader (char source, float gedcVersion, CharSet encoding, Submitter *submitter, List *otherFields);
+
+Individual *createIndividual (char *givenName, char *surname, List *events, List *families, List *otherFields);
+
+Family *createFamily (Individual *wife, Individual *husband, List *children, List *otherFields);
+
+#endif
